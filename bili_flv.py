@@ -43,12 +43,12 @@ def getFileFlv(Cid,Parts,title,path=r"D:/"):
     getFlvAddress()
     with ThreadPoolExecutor() as t:
         for i in range(0,len(flv)):
-            if "/" in title:
-                t.submit(Download, flv[i], "mp4", path, title.replace("/"," "), {
+            if "/" in title[i]:
+                t.submit(Download, flv[i], "mp4", path, title[i].replace("/"," "), {
                     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:56.0) Gecko/20100101 Firefox/56.0',
                     'Referer': "https://search.bilibili.com/all"})
             else:
-                t.submit(Download, flv[i], "mp4", path, title, {
+                t.submit(Download, flv[i], "mp4", path, title[i], {
                     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:56.0) Gecko/20100101 Firefox/56.0',
                     'Referer': "https://search.bilibili.com/all"})
 
@@ -65,8 +65,7 @@ def Download(Address,type,path,title,header):
 
 
 def Start_process(path=r"D:/", title=[],Cid=None, Parts=None):
-    for t in title:
-        getFileFlv(Cid,Parts,t,path)
+    getFileFlv(Cid=Cid,Parts=Parts,path=path,title=title)
 
 def main():
     address = input("address")
